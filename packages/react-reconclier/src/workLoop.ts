@@ -10,7 +10,14 @@ function prepareFreshStack(fiber: FiberNode) {
 	workInProgress = fiber;
 }
 
-// TODO renderRoot 该谁调用？初始化之前要干些什么？
+/*
+ * 常见的触发更新的方式：
+ * ReactDOM.createRoot().render（或老版的ReactDOM.render）
+ * this.setState
+ * useState的dispatch方法
+ * */
+
+// 在触发更新时调用
 function renderRoot(root: FiberNode) {
 	// 初始化，让我们当前的 workInProgress 指向我们需要第一个遍历的 fiberNode
 	prepareFreshStack(root);
