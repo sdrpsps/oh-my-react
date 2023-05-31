@@ -1,0 +1,13 @@
+{
+  "name": "react-reconclier",
+  "version": "1.0.0",
+  "description": "react 协调器(核心)",
+  "module": "index.ts",
+  "dependencies": {
+    "shared": "workspace:*"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}
+
