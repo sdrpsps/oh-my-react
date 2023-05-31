@@ -69,5 +69,31 @@ export const jsx = (type: ElementType, config: any, ...mayChildren: any) => {
 	return ReactElement(type, key, ref, props);
 };
 
-// 开发环境下的 JSX 生成方法，暂时与生产环境方法一样
-export const jsxDEV = jsx;
+// 开发环境下的 JSX 生成方法
+export const jsxDEV = (type: ElementType, config: any) => {
+	let key: Key = null;
+	const props: Props = {};
+	let ref: Ref = null;
+
+	// 遍历所有 config 字段 ，详情参考 Babel 官网 JSX Demo
+	for (const prop in config) {
+		const val = config[prop];
+		if (prop === 'key') {
+			if (val !== undefined) {
+				key = '' + val;
+			}
+			continue;
+		}
+		if (prop === 'ref') {
+			if (val !== undefined) {
+				ref = val;
+			}
+			continue;
+		}
+
+		if ({}.hasOwnProperty.call(config, prop)) {
+			props[prop] = val;
+		}
+	}
+	return ReactElement(type, key, ref, props);
+};
