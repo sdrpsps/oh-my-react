@@ -102,5 +102,6 @@ export function progressUpdateQueue<State>(
 			result.memoizedState = action;
 		}
 	}
+
 	return result;
 }

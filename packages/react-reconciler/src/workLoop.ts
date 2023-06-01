@@ -1,13 +1,37 @@
-import { FiberNode } from './fiber';
+import { createWorkInProgress, FiberNode, FiberRootNode } from './fiber';
 import { beginWork } from './beginWork';
 import { completeWork } from './completeWork';
+import { HostRoot } from './workTag';
 
 // 指向当前工作中的 fiberNode 的全局指针
 let workInProgress: FiberNode | null = null;
 
 // 初始化当前 fiberNode 指针
-function prepareFreshStack(fiber: FiberNode) {
-	workInProgress = fiber;
+function prepareFreshStack(root: FiberRootNode) {
+	workInProgress = createWorkInProgress(root.current, {});
+}
+
+export function scheduleUpdateOnFiber(fiber: FiberNode) {
+	// TODO 调度功能
+	// fiberRootNode
+	const root = markUpdateFromFiberToRoot(fiber);
+	renderRoot(root);
+}
+
+function markUpdateFromFiberToRoot(fiber: FiberNode) {
+	let node = fiber;
+	let parent = node.return;
+
+	while (parent !== null) {
+		node = parent;
+		parent = node.return;
+	}
+
+	if (node.tag === HostRoot) {
+		return node.stateNode;
+	}
+
+	return null;
 }
 
 /*
@@ -18,7 +42,7 @@ function prepareFreshStack(fiber: FiberNode) {
  * */
 
 // 在触发更新时调用
-function renderRoot(root: FiberNode) {
+function renderRoot(root: FiberRootNode) {
 	// 初始化，让我们当前的 workInProgress 指向我们需要第一个遍历的 fiberNode
 	prepareFreshStack(root);
 
