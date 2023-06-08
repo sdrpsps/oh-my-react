@@ -36,7 +36,7 @@ export function createUpdate<State>(action: Action<State>): Update<State> {
 };*/
 
 // 创建消费 Update 的实例，我习惯的写法
-export function createUpdateQueue<Action>(): UpdateQueue<Action> {
+export function createUpdateQueue<State>(): UpdateQueue<State> {
 	return {
 		shared: {
 			pending: null
@@ -53,8 +53,8 @@ export function createUpdateQueue<Action>(): UpdateQueue<Action> {
 };*/
 
 // 将 Update 插入到 UpdateQueue，我习惯的写法
-export function enqueueUpdate<Action>(
-	updateQueue: UpdateQueue<Action>,
+export function enqueueUpdate<State>(
+	updateQueue: UpdateQueue<State>,
 	update: Update<Action>
 ) {
 	updateQueue.shared.pending = update;
